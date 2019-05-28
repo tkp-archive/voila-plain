@@ -33,7 +33,7 @@ div#notebook {
     background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-    background: #9c27b0;
+    background: grey;
 }
 
 div#notebook-container{
