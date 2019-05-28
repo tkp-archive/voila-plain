@@ -2,29 +2,27 @@
 {% from 'mathjax.tpl' import mathjax %}
 
 {%- block html_head_css -%}
+<link rel="stylesheet" type="text/css" href="{{resources.base_url}}voila/static/index.css"></link>
 
-{% for css in resources.inlining.css -%}
+{% if resources.theme == 'dark' %}
+    <link rel="stylesheet" type="text/css" href="{{resources.base_url}}voila/static/theme-dark.css"></link>
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{{resources.base_url}}voila/static/theme-light.css"></link>
+{% endif %}
+
+{% for css in resources.inlining.css %}
     <style type="text/css">
     {{ css }}
     </style>
 {% endfor %}
 
 <style type="text/css">
-
-/* Overrides of notebook CSS for static HTML export */
 body {
   overflow: visible;
-  padding: 8px;
-}
-
-div#notebook {
-  overflow: auto;
-  padding-right:5px;
-  border: none;
-  padding: 0px;
-  resize:both;
-  min-height: 0px;
-  height:100%;
+  padding: 5px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  height: 100vh;
 }
 
 ::-webkit-scrollbar {
@@ -32,50 +30,46 @@ div#notebook {
     height:5px;
     background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
     background: grey;
 }
 
-div#notebook-container{
+a.anchor-link {
+  display: none;
+}
+
+div.jp-Cell-inputWrapper,
+div.jp-Cell {
+  overflow: auto;
+  border: none;
   padding: 0px;
-  -webkit-box-shadow: none;
-  box-shadow:none;
 }
 
-div.output_subarea {
-  max-width: 100%;
+div.jp-RenderedHTMLCommon, 
+div.jp-RenderedText,
+div.jp-RenderedMarkdown {
+    padding: 0px;
 }
 
-@media print {
-  div.cell {
-    display: block;
-    page-break-inside: avoid;
-  }
-  div.output_wrapper {
-    display: block;
-    page-break-inside: avoid;
-  }
-  div.output {
-    display: block;
-    page-break-inside: avoid;
-  }
+div.jp-RenderedHTMLCommon > p, 
+div.jp-RenderedText > p,
+div.jp-RenderedMarkdown > p {
+    margin-bottom: 5px;
 }
+
 </style>
 
-<!-- Custom stylesheet, it must be in the same directory as the html file -->
-<!-- <link rel="stylesheet" href="custom.css"> -->
-
-<!-- Loading mathjax macro -->
 {{ mathjax() }}
 {%- endblock html_head_css -%}
 
-{% block body %}
-<body>
-  <div tabindex="-1" id="notebook" class="border-box-sizing">
-    <div class="container" id="notebook-container">
+{%- block body -%}
+{% if resources.theme == 'dark' %}
+<body class="jp-Notebook theme-dark" data-base-url="{{resources.base_url}}voila/">
+{% else %}
+<body class="jp-Notebook theme-light" data-base-url="{{resources.base_url}}voila/">
+{% endif %}
 {{ super() }}
-    </div>
-  </div>
 </body>
-{%- endblock body %}
+{%- endblock body -%}
 

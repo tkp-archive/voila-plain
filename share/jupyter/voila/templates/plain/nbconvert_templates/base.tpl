@@ -1,4 +1,4 @@
-{%- extends 'basic.tpl' -%}
+{%- extends 'lab.tpl' -%}
 {% from 'mathjax.tpl' import mathjax %}
 
 {%- block header -%}
@@ -23,7 +23,6 @@
 }
 </script>
 {%- endblock html_head_js -%}
-
 
 {%- block html_head_css -%}
 {%- endblock html_head_css -%}
@@ -53,6 +52,11 @@ requirejs(
     {% endfor %}
     ]
 )
+requirejs([
+    {% for ext in resources.extra_extensions -%}
+        "{{ ext }}",
+    {% endfor %}
+])
 </script>
 
 {% endblock footer_js %}
